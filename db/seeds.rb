@@ -39,7 +39,7 @@ movies.each do |movie|
   Movie.create!(
     title: movie[:title], 
     genre: movie[:genre], 
-    rating: rand(1.0..10.0).round(2), 
+    rating: format('%.2f', rand(1.0..10.0)), 
     available_copies: rand(1..10)
   )
 end
