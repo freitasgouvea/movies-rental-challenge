@@ -31,12 +31,11 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #rented_movies' do
     let!(:user) { FactoryBot.create(:user) }
+    let(:movie) { FactoryBot.create(:movie, available_copies: 2) }
 
     context 'when the user exists and has rented movies' do
-      let!(:rented_movies) { FactoryBot.create_list(:movie, 5) }
-
       before do
-        user.rented << rented_movies
+        Rental.create(user_id: user.id, movie_id: movie.id, active: true)
       end
 
       it 'returns the movies rented by the user' do
@@ -44,7 +43,7 @@ RSpec.describe UsersController, type: :controller do
         parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(:success)
         expect(parsed_response).to be_an(Array)
-        expect(parsed_response.size).to eq(5)
+        expect(parsed_response.size).to eq(1)
       end
     end
 
