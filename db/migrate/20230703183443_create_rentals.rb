@@ -3,6 +3,7 @@ class CreateRentals < ActiveRecord::Migration[7.0]
     create_table :rentals, primary_key: :id do |t|
       t.references :movie, foreign_key: true, null: false
       t.references :user, foreign_key: true, null: false
+      t.boolean :active, null: false
 
       t.timestamps
     end

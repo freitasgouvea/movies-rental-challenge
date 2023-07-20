@@ -38,7 +38,7 @@ RSpec.describe RentalsController, type: :controller do
 
     context 'when the user has already rented this movie' do
       before do
-        Rental.create(user: user, movie: movie)
+        Rental.create(user: user, movie: movie, active: true)
       end
 
       it 'does not create a new rental' do
