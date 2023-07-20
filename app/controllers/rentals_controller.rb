@@ -12,4 +12,15 @@ class RentalsController < ApplicationController
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
+
+  def finish
+    rental_service = RentalsService.new
+    rental = rental_service.finish_rental(params[:id], params[:user_rating])
+
+    render json: rental, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Rental not found' }, status: :not_found
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
 end
